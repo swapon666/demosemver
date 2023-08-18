@@ -4,3 +4,8 @@ branches:
     regex: ^latest$
   pull-request:
     tag: pr
+merge-message-formats: {}
+tag-prefix: '[vV]'
+major-version-bump-message: .?(breaking change|BREAKING CHANGE|major).?
+minor-version-bump-message: (feat|feature|minor)
+patch-version-bump-message: (fix|patch)
