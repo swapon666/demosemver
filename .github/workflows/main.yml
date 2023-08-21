@@ -43,4 +43,4 @@ jobs:
           useConfigFile: true
           
       - name: display semver
-        run: echo "version : $GitVersion_SemVer"
+        run: echo "version = $GitVersion_SemVer"
