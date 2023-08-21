@@ -13,3 +13,5 @@ Commit with the following messages :
 
 
 Create release (tag) with commit message, create package with tag version (from semver)
+
+# next chap
