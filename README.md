@@ -4,6 +4,7 @@ test of semver with githubaction
 # How it works ?
 
 
+
 Commit with the following messages :
 
 * MAJOR : form bump first digit
