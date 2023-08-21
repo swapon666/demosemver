@@ -3,20 +3,7 @@ mode: Mainline
 branches:
   master:
     regex: ^master$|^main$
-  pull-request:
-    tag: pr
-  feature:
-    regex: .*/
-    tag: useBranchName
-    increment: Patch
-    source-branches: ['master', 'feature']
-    track-merge-target: true
-  release:
-    tag: ''
-    regex: releases?[/-]\d+\.\d+\.\d+
-    increment: Patch
-    is-release-branch: true
-merge-message-formats: {}
+
 tag-prefix: '[vV]'
 major-version-bump-message: .?(breaking change|BREAKING CHANGE|major).?
 minor-version-bump-message: (feat|feature|minor)
