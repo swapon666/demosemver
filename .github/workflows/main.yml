@@ -1,47 +1,24 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# GitHub recommends pinning actions to a commit SHA.
-# To get a newer version, you will need to update the SHA.
-# You can also reference a tag or branch, but the action may change without warning.
-
-name: Create and publish a Docker image
-
-on:
-  push:
-    branches: ['main']
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-
 jobs:
-  build-and-push-image:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write # for write in ghcr 
-      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
-      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
 
     steps:
-      - name: Checkout repository with history
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0
-        with:
-          versionSpec: '5.x'    
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-      - name: Determine Version
-        uses: gittools/actions/gitversion/execute@v0
+      - name: Get Next Version
+        id: semver
+        uses: ietf-tools/semver-action@v1
         with:
-          useConfigFile: true
-          configFilePath: GitVersion.yml
-          
-      - name: display semver
-        run: echo "version = $GitVersion_SemVer"
+          token: ${{ github.token }}
+          branch: main
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          allowUpdates: true
+          draft: false
+          makeLatest: true
+          name: ${{ steps.semver.outputs.next }}
+          body: Changelog Contents
+          token: ${{ github.token }}
