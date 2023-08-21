@@ -5,7 +5,7 @@ on:
     branches: ['main']
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: "superImage"
+  IMAGE_NAME: "demo"
   
 jobs:
   deploy:
