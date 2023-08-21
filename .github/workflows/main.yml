@@ -40,4 +40,7 @@ jobs:
       - name: Determine Version
         uses: gittools/actions/gitversion/execute@v0
         with:
-          useConfigFile: true        
+          useConfigFile: true
+          
+      - name: display semver
+        run: echo "val : ${{ steps.gitversion.outputs.semver }}"
