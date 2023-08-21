@@ -18,21 +18,31 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  deploy:
+  build-and-push-image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # for write in ghcr 
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Get Next Version
-        id: semver
-        uses: ietf-tools/semver-action@v1
+      - name: Checkout repository with history
+        uses: actions/checkout@v3
         with:
-          token: ${{ github.token }}
-          branch: main
+          fetch-depth: 0
+          
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0
+        with:
+          versionSpec: '5.x'    
 
-      - name: retrieve war name
-        run:  echo ${{ steps.semver.outputs.next }}
-
+      - name: Determine Version
+	    id: gitversion
+        uses: gittools/actions/gitversion/execute@v0
+        with:
+          useConfigFile: true        
+		  
+	  - name: display semver
+        run: echo "val : ${{ steps.gitversion.outputs.semver }}"	  
 
