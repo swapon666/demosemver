@@ -5,7 +5,7 @@ on:
     branches: ['main']
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: test
+  IMAGE_NAME: ${{ github.repository }}
   
 jobs:
   deploy:
@@ -35,7 +35,7 @@ jobs:
           makeLatest: true
           tag: ${{ steps.semver.outputs.next }}
           name: ${{ steps.semver.outputs.next }}
-          body: Changelog Contents
+          body: ${{ github.event.head_commit.message }}
           token: ${{ github.token }}
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
