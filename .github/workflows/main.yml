@@ -18,14 +18,12 @@ jobs:
         with:
           token: ${{ github.token }}
           branch: main
-      - name: Create Tag
-        uses: actions/github-script@v6
+      - name: Create Release
+        uses: ncipollo/release-action@v1.12.0
         with:
-          script: |
-            const {DIST_VERSION} = process.env          
-            github.rest.git.createRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: `refs/tags/$${{ steps.semver.outputs.next }}`,
-                sha: context.sha
-            })
+          allowUpdates: true
+          draft: false
+          makeLatest: true
+          name: ${{ steps.semver.outputs.next }}
+          body: Changelog Contents
+          token: ${{ github.token }}
