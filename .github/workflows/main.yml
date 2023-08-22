@@ -27,7 +27,7 @@ jobs:
         with:
           token: ${{ github.token }}
           branch: main
-          major: major
+          majorList: major
           
       - name: Create Release
         uses: ncipollo/release-action@v1.12.0
